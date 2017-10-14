@@ -19,11 +19,13 @@ body {
 #dealer {
     font-size: 22px;
     color: #ffffff;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 #player {
     font-size: 22px;
     color: #ffffff;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
 h1 {
@@ -37,7 +39,7 @@ h1 {
 .hand {
   padding: 10px;
   border-radius: 3px;
-  height: 100px;
+  height: 150px;
   background: #008000;
   border: 2px solid #e5c100;
   margin-top: 10px;
@@ -49,11 +51,17 @@ h1 {
   margin: 0 5px;
 }
 
-.buttons {
-  text-align: center;
+img {
+    width: 90px;
+    height: 125px;
 }
 
-buttons button {
+.buttons {
+    text-align: center;
+    display: inline-block center;
+}
+
+.buttons button {
   border: 1px solid #666;
   border-radius: 5px;
   background: linear-gradient(#eee, #ccc);
