@@ -54,8 +54,19 @@ var deck = [
 ];
 
 $(document).ready(function () {
+    $('#play-again-button').hide();
+    $('#deal-button').hide();
+    $('#hit-button').hide();
+    $('#stand-button').hide();
 
-    setupNewGame()
+    $('#start-button, #play-again-button').click(function() {
+        setupNewGame();
+        updateScoreDisplay();
+        $('#deal-button').show();
+        $('#hit-button').show();
+        $('#stand-button').show();
+        $('#play-again-button').hide();
+    })
 
     var dealerHand, playerHand;
 
@@ -67,6 +78,9 @@ $(document).ready(function () {
          dealACard(playerHand, '#player-hand');
          dealACard(dealerHand, '#dealer-hand');
 
+         console.log(playerHand);
+         console.log(dealerHand);
+
          $('#deal-button').hide();
      })
 
@@ -74,13 +88,39 @@ $(document).ready(function () {
        dealACard(playerHand, '#player-hand');
        // check for bust
        if (calculatePoints(playerHand) > 21) {
+         $('#messages').show();
          $('#messages').text('You bust!');
          gameOver();
        }
      });
 
-
-
+     $('#stand-button').click(function() {
+         $('#messages').show();
+         while(calculatePoints(dealerHand) < 20) {
+             dealACard(dealerHand, '#dealer-hand')
+         }
+         //check for bust
+         if (calculatePoints(dealerHand) > 21) {
+             //dealer busts
+             $('#messages').text('Dealer Busts! You Win!!')
+         } else if (calculatePoints(playerHand) > 21) {
+             //player busts
+             $('#messages').text('You bust! You lose!!')
+         } else {
+             //determine winner
+             var playerPoints = calculatePoints(playerHand)
+             var dealerPoints = calculatePoints(dealerHand)
+             var message;
+             if (playerPoints > dealerPoints) {
+                 message = "You Win!!"
+             } else if (dealerPoints > playerPoints) {
+                 message = "You Lose!!"
+             } else {
+                 message = "Push!"
+             }
+             $('#messages').text(message);
+         }
+     });
 
     // $('#deal-button').click(function () {
     //     $("#dealer-hand").append('<img src="images/2_of_clubs.png">')
@@ -93,30 +133,51 @@ $(document).ready(function () {
     //     $("#player-hand").append('<img src="images/4_of_hearts.png">')
     // })
 
-    function shuffleArray(array) {
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
+    function shuffleDeck(array) {
+        dealerHand =[];
+        playerHand = [];
+        for (var i = deck.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
         }
         return array;
     }
 
+    // function playAgain() {
+    //
+    // }
+
     function setupNewGame() {
-        var newDeck = shuffleArray(deck)
         dealerHand = [];
         playerHand = [];
+        $('#messages').hide()
+        $('img').remove();
+        deck = newDeck();
+        deck = shuffleDeck(deck);
+
+    }
+
+    function newDeck() {
+      var cards = [];
+      for (var i = 1; i <= 13; i++) {
+        cards.push({ point: i, suit: 'spades' }); // change to Card constructor
+        cards.push({ point: i, suit: 'hearts' });
+        cards.push({ point: i, suit: 'clubs' });
+        cards.push({ point: i, suit: 'diamonds' });
+      }
+      return cards;
     }
 
     function getCardImageUrl(card) {
         if (card.point == 1) {
             cardName = 'ace';
-        } else if (card.point = 11) {
+        } else if (card.point == 11) {
             cardName = 'jack';
-        } else if (card.point = 12) {
+        } else if (card.point ==12) {
             cardName = 'queen';
-        } else if (card.point = 13) {
+        } else if (card.point == 13) {
             cardName = 'king';
         } else {
             cardName = card.point;
@@ -151,9 +212,9 @@ $(document).ready(function () {
     }
 
     function gameOver() {
-      $('#hit-button').hide();
-      $('#stand-button').hide();
-      $('#play-again').show();
+        $('#hit-button').hide();
+        $('#stand-button').hide();
+        $('#play-again-button').show();
     }
 
 

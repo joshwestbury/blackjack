@@ -28,6 +28,18 @@ body {
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
+.points {
+    font-size: 22px;
+    color: #b20000;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+#messages {
+    font-size: 32px;
+    color: #b20000;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
 h1 {
     color: #b20000;
     text-align: center;
