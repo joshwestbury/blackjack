@@ -61,7 +61,7 @@ var card;
 var cardURL;
 
 // build card deck
-unction Card(rank, suit) {
+function Card(rank, suit) {
   this.rank = rank;
   this.suit = suit;
 }

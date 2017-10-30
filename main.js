@@ -2,26 +2,24 @@ class Card{
     constructor (rank, suit) {
         this.rank = rank;
         this.suit = suit;
-    }
-        //generate image url
-    getImageUrl () {
-        var cardName;
+        this.imageUrl = ""
+        this.cardName = ""
         if (this.rank == 1) {
-            cardName = 'ace';
+            this.cardName = 'ace';
         } else if (this.rank == 11) {
-            cardName = 'jack';
+            this.cardName = 'jack';
         } else if (this.rank ==12) {
-            cardName = 'queen';
+            this.cardName = 'queen';
         } else if (this.rank == 13) {
-            cardName = 'king';
+            this.cardName = 'king';
         } else {
-            cardName = this.rank;
+            this.cardName = this.rank;
         }
-        return `images/${cardName}_of_${this.suit}.png`
+        this.imageUrl = `images/${this.cardName}_of_${this.suit}.png`
     }
 }
 
-// myCard = new Card
+//myCard = new Card
 // myCard.getImageUrl();
 
     //Generate a deck of cards
@@ -51,17 +49,25 @@ class Deck{
     }
 }
 
-    //create a deck instance
-var myDeck = new Deck()
-
-    //Generate a hand of cards
+//Generate a hand of cards
 class Hand {
-    constructor (dealtCard) {
+    constructor (selector) {
+        this.selector = selector;
         this.dealtCard = []
     }
     addCard () {
         var card = myDeck.cards.pop()
-        return this.dealtCard.push(card)
+        this.dealtCard.push(card)
+        console.log(card);
+        this.draw();
+    }
+    draw(){
+        var html = '';
+        this.dealtCard.forEach(function (card) {
+            html += `<img src="${card.imageUrl}">`;
+        });
+
+        $(this.selector).html(html);
     }
     getPoints () {
         var total = 0
@@ -78,9 +84,9 @@ class Hand {
 
 
 //Game variables
-var dealerHand = new Hand()
-var playerHand = new Hand()
-
+var dealerHand = new Hand('#dealer-hand')
+var playerHand = new Hand('#player-hand')
+var myDeck = new Deck()
 
 
 function setupNewGame() {
@@ -115,18 +121,23 @@ $(document).ready(function () {
     clearHand();
     //updateScoreDisplay -- do I need this?
     myDeck.shuffleDeck();
-
     $('#start-button, #play-again-button').click(function() {
         showButtons();
     })
+
     $('#deal-button').click(function(){
-        console.log(playerHand.addCard());
-        console.log(dealerHand.addCard());
-        console.log(playerHand.addCard());
-        console.log(dealerHand.addCard());
+        playerHand.addCard();
+        dealerHand.addCard();
+        playerHand.addCard();
+        dealerHand.addCard();
 
-        console.log(dealerHand.dealtCard[0].getImageUrl());
 
+
+
+
+
+        // how do I get image url into html.
+        // does addCard and getImageUrl need to be in same class?
     })
 
 
