@@ -24,7 +24,7 @@ class Card{
 
     //Generate a deck of cards
 class Deck{
-    constructor (rank, suit) {
+    constructor (ranks, suits) {
         this.ranks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
         this.suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades'];
         this.cards = [];
@@ -129,17 +129,11 @@ $(document).ready(function () {
         playerHand.addCard();
         dealerHand.addCard();
         playerHand.addCard();
-        dealerHand.addCard();
-
-
-
-
-
-
-        // how do I get image url into html.
-        // does addCard and getImageUrl need to be in same class?
+        $('#dealer-hand').append("<img src='/images/cardBack_blue.png'/>");
     })
 
-
-
+    $('#stand-button').click(function(){
+        $('#dealer-hand img:last-child').remove();
+        dealerHand.addCard();
+    })
 })
